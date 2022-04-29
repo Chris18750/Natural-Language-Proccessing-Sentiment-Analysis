@@ -1,3 +1,9 @@
+# import all required libraries
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import matplotlib.pylab as plt
+
 def method_0:
   
 def method_1:
