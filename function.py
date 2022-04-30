@@ -10,18 +10,19 @@ import matplotlib.pylab as plt
 def MultinomialNB():
   from sklearn.naive_bayes import MultinomialNB
   from sklearn.feature_extraction.text import CountVectorizer
-
-  #Import scikit-learn metrics module for accuracy calculation
   from sklearn import metrics
 
+  #Load data
   (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data()
 
+  #Format data with maximum length
   x_train = keras.preprocessing.sequence.pad_sequences(x_train, maxlen=256, padding='post', truncating='post', value=0)
   x_test = keras.preprocessing.sequence.pad_sequences(x_test, maxlen=256, padding='post', truncating='post', value=0)
 
   model = MultinomialNB()
+  
   clf = model.fit(x_train, y_train)
-
+  
   predicted= clf.predict(x_test)
 
   accuracy = metrics.accuracy_score(y_test, predicted)
