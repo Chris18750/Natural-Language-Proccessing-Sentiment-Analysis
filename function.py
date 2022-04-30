@@ -4,6 +4,9 @@ from tensorflow import keras
 import numpy as np
 import matplotlib.pylab as plt
 
+#Resources
+#https://docs.w3cub.com/scikit_learn/modules/generated/sklearn.naive_bayes.multinomialnb
+#https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
 def MultinomialNB():
   from sklearn.naive_bayes import MultinomialNB
   from sklearn.feature_extraction.text import CountVectorizer
