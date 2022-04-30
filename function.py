@@ -29,9 +29,10 @@ def MultinomialNB():
   #print("MultinomialNB Accuracy:", accuracy)
   return accuracy
   
-  
+#CNN  
 def method_1():
-  
+
+#GuassianNB
 def method_2():
 
 def method_3():
