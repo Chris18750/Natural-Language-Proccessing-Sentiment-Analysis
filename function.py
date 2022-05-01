@@ -25,8 +25,7 @@ def MultinomialNB():
   predicted= clf.predict(x_test)
 
   accuracy = metrics.accuracy_score(y_test, predicted)
-  #print("MultinomialNB Accuracy:", accuracy)
-  return accuracy
+  print("MultinomialNB Accuracy:", accuracy)
   
 #CNN
 #Resources:
