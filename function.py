@@ -31,7 +31,7 @@ def MultinomialNB():
 #Resources:
 #https://machinelearningmastery.com/develop-word-embedding-model-predicting-movie-review-sentiment/
 #https://builtin.com/data-science/how-build-neural-network-keras
-def method_1():
+def Convolutional_neural_network():
   #Loading IMDB dataset from keras
   (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
 
