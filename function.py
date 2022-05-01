@@ -6,7 +6,8 @@ from sklearn.naive_bayes import MultinomialNB, ComplementNB, BernoulliNB, Gaussi
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import metrics
 
-#Resources
+#MultinomialNB
+#Resources:
 #https://docs.w3cub.com/scikit_learn/modules/generated/sklearn.naive_bayes.multinomialnb
 #https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
 def Multinomial():
