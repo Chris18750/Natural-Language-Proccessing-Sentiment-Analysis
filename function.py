@@ -12,7 +12,7 @@ from sklearn import metrics
 #https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
 def MultinomialNB():
   #Load data
-  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data()
+  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
 
   #Format data with maximum length
   x_train = keras.preprocessing.sequence.pad_sequences(x_train, maxlen=256, padding='post', truncating='post', value=0)
