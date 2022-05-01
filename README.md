@@ -1,5 +1,5 @@
 # Natural-Language-Proccessing: Sentiment Analysis
-This Github respository contains the source code for five methods that do sentiment analysis on a IDMB data set which contains multiple reviews of films to determine the reviews overall sentiment.
+This Github respository contains the source code for five methods that do sentiment analysis on a IDMB data set which contains multiple film reviews.
 
 ## Table of contents
 * [Convolutional Neural Network](#convolutional-neural-network)
