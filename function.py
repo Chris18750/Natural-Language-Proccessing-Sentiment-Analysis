@@ -2,15 +2,14 @@
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import matplotlib.pylab as plt
-from sklearn.naive_bayes import MultinomialNB, ComplementNB, BernoulliNB
+from sklearn.naive_bayes import MultinomialNB, ComplementNB, BernoulliNB, GaussianNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import metrics
 
 #Resources
 #https://docs.w3cub.com/scikit_learn/modules/generated/sklearn.naive_bayes.multinomialnb
 #https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
-def MultinomialNB():
+def Multinomial():
   #Load data
   (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
 
@@ -75,6 +74,8 @@ def Convolutional_neural_network():
 
   #Model fitting
   history = model.fit(x_train, y_train, epochs=10, batch_size=50, validation_data=(x_val, y_val), callbacks=[earlystop])
+
+  print("Test:")
 
   #Model evaluation
   model.evaluate(x_test, y_test)
@@ -156,4 +157,14 @@ def Bernoulli():
 
   accuracy = metrics.accuracy_score(y_test, predicted)
   print("BernoulliNB Accuracy:", accuracy)
-  
+
+Multinomial()
+print()
+print("Convolutional Neural Network:")
+Convolutional_neural_network()
+print()
+Guassian()
+print()
+Complement()
+print()
+Bernoulli()
