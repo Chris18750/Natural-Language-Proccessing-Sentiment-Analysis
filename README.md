@@ -26,3 +26,5 @@ This Github respository contains the source code for five methods that do sentim
 ## Bernoulli Naive Bayes
 
 ## Results
+
+## References
