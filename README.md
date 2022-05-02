@@ -31,9 +31,9 @@ The Bernoulli Naive Bayes algorithm is a machine learning method which is used o
 
 ## Results
 | Data  | CNN | MNB | GNB | CNB | BNB |
-| ------------- | ------------- |
-| Train  | 85.37% |  85.7%  | 81.26  | 85.69%  |  85.39%  |
-| Test | 84.64%  | 84.63%  |  79.22%  | 84.64%  | 85.35%  |
+|-------|-----|-----|-----|-----|-----|
+| Train | 85.37% |  85.7%  | 81.26  | 85.69%  |  85.39%  |
+| Test  | 84.64%  | 84.63%  |  79.22%  | 84.64%  | 85.35%  |
 
 ## References
 https://docs.w3cub.com/scikit_learn/modules/generated/sklearn.naive_bayes.multinomialnb
