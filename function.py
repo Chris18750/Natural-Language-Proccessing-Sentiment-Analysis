@@ -2,31 +2,45 @@
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+import pandas as pd
+import re
+import string
 from sklearn.naive_bayes import MultinomialNB, ComplementNB, BernoulliNB, GaussianNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import metrics
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-#MultinomialNB
+#NBs
 #Resources:
 #https://docs.w3cub.com/scikit_learn/modules/generated/sklearn.naive_bayes.multinomialnb
 #https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
-def Multinomial():
-  #Load data
-  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
-
-  #Format data with maximum length
-  x_train = keras.preprocessing.sequence.pad_sequences(x_train, maxlen=256, padding='post', truncating='post', value=0)
-  x_test = keras.preprocessing.sequence.pad_sequences(x_test, maxlen=256, padding='post', truncating='post', value=0)
-
+#https://www.learndatasci.com/tutorials/predicting-reddit-news-sentiment-naive-bayes-text-classifiers/
+#https://github.com/Ankit152/IMDB-sentiment-analysis/blob/master/imdbSentimentAnalysis.ipynb
+def Multinomial(x_train, y_train, x_test, y_test):
   model = MultinomialNB()
-  
-  clf = model.fit(x_train, y_train)
-  
-  predicted= clf.predict(x_test)
-
-  accuracy = metrics.accuracy_score(y_test, predicted)
-  print("MultinomialNB Accuracy:", accuracy)
-  
+  model.fit(x_train, y_train)
+  y_pred = model.predict(x_test)
+  print("Multinomial train Accuracy: {:.2f}%".format(model.score(x_train, y_train) * 100))
+  print("Multinomial test Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
+def Gaussian(x_train, y_train, x_test, y_test):
+  model = GaussianNB()
+  model.fit(x_train, y_train)
+  y_pred = model.predict(x_test)
+  print("Gaussian train Accuracy: {:.2f}%".format(model.score(x_train, y_train) * 100))
+  print("Gaussian test Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
+def Complement(x_train, y_train, x_test, y_test):
+  model = ComplementNB()
+  model.fit(x_train, y_train)
+  y_pred = model.predict(x_test)
+  print("Complement train Accuracy: {:.2f}%".format(model.score(x_train, y_train) * 100))
+  print("Complement test Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
+def Bernoulli(x_train, y_train, x_test, y_test):
+  model = BernoulliNB()
+  model.fit(x_train, y_train)
+  y_pred = model.predict(x_test)
+  print("Bernoulli train Accuracy: {:.2f}%".format(model.score(x_train, y_train) * 100))
+  print("Bernoulli test Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
 #CNN
 #Resources:
 #https://machinelearningmastery.com/develop-word-embedding-model-predicting-movie-review-sentiment/
@@ -80,92 +94,43 @@ def Convolutional_neural_network():
 
   #Model evaluation
   model.evaluate(x_test, y_test)
+def clean_text1(text):
+  text=text.lower()
+  text=re.sub('\[.*?\]','',text)
+  text=re.sub('[%s]'%re.escape(string.punctuation),'',text)
+  text=re.sub('\w*\d\w*','',text)
+  return text
 
-#GuassianNB
-#https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
-def Guassian():
-  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
-  data = np.concatenate((x_train, x_test), axis=0)
-  targets = np.concatenate((y_train, y_test), axis=0)
+def clean_text2(text):
+  text=re.sub('[''"",,,]','',text)
+  text=re.sub('\n','',text)
+  return text
 
-  #Training set gets first 20000 examples
-  x_train = data[:20000]
-  y_train = targets[:20000]
-  #Testing gets last 20000 examples
-  x_test = data[20000:]
-  y_test = targets[20000:]
-  #Standardizing review lengths by padding to maxlen 3000
-  x_train = tf.keras.preprocessing.sequence.pad_sequences(x_train, maxlen=3000, padding='post', truncating='post', value=0)
-  x_test = tf.keras.preprocessing.sequence.pad_sequences(x_test, maxlen=3000, padding='post', truncating='post', value=0)
-    
-  model = GaussianNB()
-  
-  clf = model.fit(x_train, y_train)
-  
-  predicted= clf.predict(x_test)
+dataset = pd.read_csv('IMDB Dataset.csv')
+dataset['review'] = dataset['review'].str.strip().str.lower()
 
-  accuracy = metrics.accuracy_score(y_test, predicted)
-  print("GaussianNB Accuracy:", accuracy)
+cleaned1=lambda x:clean_text1(x)
+dataset['review']=pd.DataFrame(dataset.review.apply(cleaned1))
 
-#ComplementNB
-#https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
-def Complement():
-  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
-  data = np.concatenate((x_train, x_test), axis=0)
-  targets = np.concatenate((y_train, y_test), axis=0)
+cleaned2=lambda x:clean_text2(x)
+dataset['review']=pd.DataFrame(dataset.review.apply(cleaned2))
 
-  #Training set gets first 20000 examples
-  x_train = data[:20000]
-  y_train = targets[:20000]
-  #Testing gets last 20000 examples
-  x_test = data[20000:]
-  y_test = targets[20000:]
-  #Standardizing review lengths by padding to maxlen 3000
-  x_train = tf.keras.preprocessing.sequence.pad_sequences(x_train, maxlen=3000, padding='post', truncating='post', value=0)
-  x_test = tf.keras.preprocessing.sequence.pad_sequences(x_test, maxlen=3000, padding='post', truncating='post', value=0)
-    
-  model = ComplementNB()
-  
-  clf = model.fit(x_train, y_train)
-  
-  predicted= clf.predict(x_test)
+x = dataset.iloc[0:,0].values
+y = dataset.iloc[0:,1].values
 
-  accuracy = metrics.accuracy_score(y_test, predicted)
-  print("ComplementNB Accuracy:", accuracy)
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.25,random_state = 225)
 
-#BernoulliNB
-#https://www.analyticsvidhya.com/blog/2021/07/performing-sentiment-analysis-with-naive-bayes-classifier/
-def Bernoulli():
-  (x_train, y_train), (x_test, y_test) =  keras.datasets.imdb.load_data(num_words=10000)
-  data = np.concatenate((x_train, x_test), axis=0)
-  targets = np.concatenate((y_train, y_test), axis=0)
+vect = CountVectorizer(max_features=5000, binary=True)
+x_train = vect.fit_transform(x_train).toarray()
+x_test = vect.transform(x_test).toarray()
 
-  #Training set gets first 20000 examples
-  x_train = data[:20000]
-  y_train = targets[:20000]
-  #Testing gets last 20000 examples
-  x_test = data[20000:]
-  y_test = targets[20000:]
-  #Standardizing review lengths by padding to maxlen 3000
-  x_train = tf.keras.preprocessing.sequence.pad_sequences(x_train, maxlen=3000, padding='post', truncating='post', value=0)
-  x_test = tf.keras.preprocessing.sequence.pad_sequences(x_test, maxlen=3000, padding='post', truncating='post', value=0)
-    
-  model = BernoulliNB()
-  
-  clf = model.fit(x_train, y_train)
-  
-  predicted= clf.predict(x_test)
-
-  accuracy = metrics.accuracy_score(y_test, predicted)
-  print("BernoulliNB Accuracy:", accuracy)
-
-Multinomial()
+Multinomial(x_train, y_train, x_test, y_test)
+print()
+Gaussian(x_train, y_train, x_test, y_test)
+print()
+Complement(x_train, y_train, x_test, y_test)
+print()
+Bernoulli(x_train, y_train, x_test, y_test)
 print()
 print("Convolutional Neural Network:")
 Convolutional_neural_network()
-print()
-Guassian()
-print()
-Complement()
-print()
-Bernoulli()
