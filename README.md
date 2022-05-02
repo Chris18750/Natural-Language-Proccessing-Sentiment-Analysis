@@ -11,6 +11,8 @@ This Github respository contains the source code for five methods that do sentim
 * [Results](#results)
 * [References](#references)
 
+## Intro
+
 ## Convolutional Neural Network
 
 
